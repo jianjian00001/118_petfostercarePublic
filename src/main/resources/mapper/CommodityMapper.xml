@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.CommodityMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.entity.CommodityEntity">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="product_name" jdbcType="VARCHAR" property="product_name" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="sales_price" jdbcType="DECIMAL" property="sales_price" />
+    <result column="sales_volume" jdbcType="INTEGER" property="sales_volume" />
+    <result column="evaluation" jdbcType="INTEGER" property="evaluation" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="category_details" jdbcType="CHAR" property="category_details" />
+    <result column="image_path" jdbcType="VARCHAR" property="image_path" />
+    <result column="inventory" jdbcType="INTEGER" property="inventory" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="update_date" />
+    <result column="create_user" jdbcType="VARCHAR" property="create_user" />
+    <result column="update_user" jdbcType="VARCHAR" property="update_user" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="post_fee" jdbcType="DECIMAL" property="post_fee" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_name, price, sales_price, sales_volume, evaluation, integral, category_details, 
+    image_path, inventory, create_date, update_date, create_user, update_user, `status`, 
+    post_fee
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where id = #{id,jdbcType=CHAR}
+  </select>
+    <select id="getPage" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from commodity
+      order by create_date desc
+    </select>
+    <select id="salesRanking" resultType="com.cwjy.bs.orm.entity.HomeEntity">
+      select product_name name,sum(sales_volume) `count` from commodity  GROUP BY product_name
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from commodity
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cwjy.bs.orm.dto.Commodity">
+    insert into commodity (id, product_name, price, 
+      sales_price, sales_volume, evaluation, 
+      integral, category_details, image_path, 
+      inventory, create_date, update_date, 
+      create_user, update_user, `status`, 
+      post_fee)
+    values (#{id,jdbcType=CHAR}, #{product_name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{sales_price,jdbcType=DECIMAL}, #{sales_volume,jdbcType=INTEGER}, #{evaluation,jdbcType=INTEGER}, 
+      #{integral,jdbcType=INTEGER}, #{category_details,jdbcType=CHAR}, #{image_path,jdbcType=VARCHAR}, 
+      #{inventory,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, #{update_date,jdbcType=TIMESTAMP}, 
+      #{create_user,jdbcType=VARCHAR}, #{update_user,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{post_fee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.Commodity">
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="product_name != null">
+        product_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="sales_price != null">
+        sales_price,
+      </if>
+      <if test="sales_volume != null">
+        sales_volume,
+      </if>
+      <if test="evaluation != null">
+        evaluation,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="category_details != null">
+        category_details,
+      </if>
+      <if test="image_path != null">
+        image_path,
+      </if>
+      <if test="inventory != null">
+        inventory,
+      </if>
+      <if test="create_date != null">
+        create_date,
+      </if>
+      <if test="update_date != null">
+        update_date,
+      </if>
+      <if test="create_user != null">
+        create_user,
+      </if>
+      <if test="update_user != null">
+        update_user,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="post_fee != null">
+        post_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="product_name != null">
+        #{product_name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="sales_price != null">
+        #{sales_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sales_volume != null">
+        #{sales_volume,jdbcType=INTEGER},
+      </if>
+      <if test="evaluation != null">
+        #{evaluation,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="category_details != null">
+        #{category_details,jdbcType=CHAR},
+      </if>
+      <if test="image_path != null">
+        #{image_path,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null">
+        #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="create_date != null">
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="post_fee != null">
+        #{post_fee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <insert id="addProductReviewsCount">
+    update commodity set evaluation = (evaluation + 1) where id = #{id}
+  </insert>
+  <insert id="addSalesVolume">
+     update commodity set sales_volume = (sales_volume + 1) where id = #{id}
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.Commodity">
+    update commodity
+    <set>
+      <if test="product_name != null">
+        product_name = #{product_name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="sales_price != null">
+        sales_price = #{sales_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sales_volume != null">
+        sales_volume = #{sales_volume,jdbcType=INTEGER},
+      </if>
+      <if test="evaluation != null">
+        evaluation = #{evaluation,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="category_details != null">
+        category_details = #{category_details,jdbcType=CHAR},
+      </if>
+      <if test="image_path != null">
+        image_path = #{image_path,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null">
+        inventory = #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="create_date != null">
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        create_user = #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        update_user = #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="post_fee != null">
+        post_fee = #{post_fee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.Commodity">
+    update commodity
+    set product_name = #{product_name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      sales_price = #{sales_price,jdbcType=DECIMAL},
+      sales_volume = #{sales_volume,jdbcType=INTEGER},
+      evaluation = #{evaluation,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      category_details = #{category_details,jdbcType=CHAR},
+      image_path = #{image_path,jdbcType=VARCHAR},
+      inventory = #{inventory,jdbcType=INTEGER},
+      create_date = #{create_date,jdbcType=TIMESTAMP},
+      update_date = #{update_date,jdbcType=TIMESTAMP},
+      create_user = #{create_user,jdbcType=VARCHAR},
+      update_user = #{update_user,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      post_fee = #{post_fee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="cutProductReviewsCount">
+    update commodity set evaluation = (evaluation - 1) where id = #{id}
+  </update>
+</mapper>

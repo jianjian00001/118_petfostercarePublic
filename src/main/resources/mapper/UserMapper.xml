@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.dto.User">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
+    <result column="create_user" jdbcType="VARCHAR" property="create_user" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="update_date" />
+    <result column="update_user" jdbcType="VARCHAR" property="update_user" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="home_address" jdbcType="VARCHAR" property="home_address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="role_code" jdbcType="CHAR" property="role_code" />
+    <result column="role_name" jdbcType="CHAR" property="role_name" />
+    <result column="images_path" jdbcType="CHAR" property="images_path" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, username, `password`, create_date, create_user, update_date, update_user, 
+    `status`, home_address, phone, sex, age, role_code ,images_path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="getPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    order by create_date desc 
+  </select>
+  <select id="selectByName" resultType="java.lang.Integer">
+     select count(*) from user where username = #{username}
+  </select>
+  <select id="selectByNameUser" resultMap="BaseResultMap">
+     select
+      <include refid="Base_Column_List"></include>
+      from user where username = #{username}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    * from
+    (select a.*,b.role_name from `user` a
+    LEFT JOIN
+    role b
+    on a.role_code = b.id) c
+    order by create_date desc 
+  </select>
+  <select id="login" resultType="java.lang.Integer">
+    select count(*) from `user` where username = #{username} and password = #{password}
+  </select>
+  <select id="loginAdmin" resultType="java.lang.Integer">
+    select count(*) from `user` where username = #{username} and password = #{password}
+  </select>
+  <select id="getUsername" resultMap="BaseResultMap">
+       select <include refid="Base_Column_List"></include>
+    from `user` where username = #{username}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cwjy.bs.orm.dto.User">
+    insert into user (id, role_code, `name`, username,
+      `password`, create_date, create_user, 
+      update_date, update_user, `status`, 
+      home_address, phone, sex,
+      age,images_path)
+    values (#{id,jdbcType=CHAR},#{role_code,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{create_date,jdbcType=TIMESTAMP}, #{create_user,jdbcType=VARCHAR}, 
+      #{update_date,jdbcType=TIMESTAMP}, #{update_user,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{home_address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+      #{age,jdbcType=INTEGER},#{images_path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="create_date != null">
+        create_date,
+      </if>
+      <if test="create_user != null">
+        create_user,
+      </if>
+      <if test="update_date != null">
+        update_date,
+      </if>
+      <if test="update_user != null">
+        update_user,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="home_address != null">
+        home_address,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="role_code != null">
+        role_code,
+      </if>
+      <if test="images_path != null">
+        images_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null">
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_date != null">
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_user != null">
+        #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="home_address != null">
+        #{home_address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="role_code != null">
+        #{role_code,jdbcType=CHAR},
+      </if>
+      <if test="images_path != null">
+        #{images_path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.User">
+    update user
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null">
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        create_user = #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_date != null">
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_user != null">
+        update_user = #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="home_address != null">
+        home_address = #{home_address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="role_code != null">
+        role_code = #{role_code,jdbcType=CHAR},
+      </if>
+      <if test="role_code != null">
+        images_path = #{images_path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.User">
+    update user
+    set `name` = #{name,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      create_date = #{create_date,jdbcType=TIMESTAMP},
+      create_user = #{create_user,jdbcType=VARCHAR},
+      update_date = #{update_date,jdbcType=TIMESTAMP},
+      update_user = #{update_user,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      home_address = #{home_address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      role_code = #{role_code,jdbcType=CHAR},
+      images_path = #{images_path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updatePassword">
+    update user  set password = #{password} where username = #{username}
+  </update>
+  <update id="updateImages">
+    update `user` set images_path = #{images_path} where username = #{username}
+  </update>
+</mapper>

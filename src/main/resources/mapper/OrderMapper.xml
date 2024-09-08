@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.entity.OrderEntity">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="payment" jdbcType="DECIMAL" property="payment"/>
+        <result column="payment_type" jdbcType="INTEGER" property="payment_type"/>
+        <result column="post_fee" jdbcType="DECIMAL" property="post_fee"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="create_date"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="update_date"/>
+        <result column="payment_time" jdbcType="TIMESTAMP" property="payment_time"/>
+        <result column="consigo_time" jdbcType="TIMESTAMP" property="consigo_time"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="end_time"/>
+        <result column="close_time" jdbcType="TIMESTAMP" property="close_time"/>
+        <result column="shipping_name" jdbcType="VARCHAR" property="shipping_name"/>
+        <result column="shipping_code" jdbcType="VARCHAR" property="shipping_code"/>
+        <result column="user_id" jdbcType="CHAR" property="user_id"/>
+        <result column="buyer_message" jdbcType="VARCHAR" property="buyer_message"/>
+        <result column="buyer_nick" jdbcType="VARCHAR" property="buyer_nick"/>
+        <result column="buyer_rate" jdbcType="INTEGER" property="buyer_rate"/>
+        <result column="commodity_id" jdbcType="CHAR" property="commodity_id"/>
+        <result column="commodity_type" jdbcType="VARCHAR" property="commodity_type"/>
+        <result column="create_user" jdbcType="VARCHAR" property="create_user"/>
+        <result column="update_user" jdbcType="VARCHAR" property="update_user"/>
+        <result column="shipping_type" jdbcType="INTEGER" property="shipping_type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, payment, payment_type, post_fee, `status`, create_date, update_date, payment_time, 
+    consigo_time, end_time, close_time, shipping_name, shipping_code, user_id, buyer_message, 
+    buyer_nick, buyer_rate, commodity_id, commodity_type, create_user, update_user, shipping_type
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <select id="getPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        <if test="create_user != null">
+              where create_user = #{create_user}
+        </if>
+        order by create_date desc
+    </select>
+    <select id="dailyOrder" resultType="com.cwjy.bs.orm.entity.HomeEntity">
+        select DATE_FORMAT(create_date,"%Y-%m-%d") `name`, count(*) `count` from `order`
+         GROUP BY DATE_FORMAT(create_date,"%Y-%m-%d")
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from `order`
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+    <insert id="insert" parameterType="com.cwjy.bs.orm.dto.Order">
+    insert into `order` (id, payment, payment_type,
+      post_fee, `status`, create_date, 
+      update_date, payment_time, consigo_time, 
+      end_time, close_time, shipping_name, 
+      shipping_code, user_id, buyer_message, 
+      buyer_nick, buyer_rate, commodity_id, 
+      commodity_type, create_user, update_user, shipping_type
+      )
+    values (#{id,jdbcType=CHAR}, #{payment,jdbcType=DECIMAL}, #{payment_type,jdbcType=INTEGER}, 
+      #{post_fee,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, 
+      #{update_date,jdbcType=TIMESTAMP}, #{payment_time,jdbcType=TIMESTAMP}, #{consigo_time,jdbcType=TIMESTAMP}, 
+      #{end_time,jdbcType=TIMESTAMP}, #{close_time,jdbcType=TIMESTAMP}, #{shipping_name,jdbcType=VARCHAR}, 
+      #{shipping_code,jdbcType=VARCHAR}, #{user_id,jdbcType=CHAR}, #{buyer_message,jdbcType=VARCHAR}, 
+      #{buyer_nick,jdbcType=VARCHAR}, #{buyer_rate,jdbcType=INTEGER}, #{commodity_id,jdbcType=CHAR}, 
+      #{commodity_type,jdbcType=VARCHAR}, #{create_user,jdbcType=VARCHAR}, #{update_user,jdbcType=VARCHAR}, #{shipping_type,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.Order">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="payment != null">
+                payment,
+            </if>
+            <if test="payment_type != null">
+                payment_type,
+            </if>
+            <if test="post_fee != null">
+                post_fee,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="create_date != null">
+                create_date,
+            </if>
+            <if test="update_date != null">
+                update_date,
+            </if>
+            <if test="payment_time != null">
+                payment_time,
+            </if>
+            <if test="consigo_time != null">
+                consigo_time,
+            </if>
+            <if test="end_time != null">
+                end_time,
+            </if>
+            <if test="close_time != null">
+                close_time,
+            </if>
+            <if test="shipping_name != null">
+                shipping_name,
+            </if>
+            <if test="shipping_code != null">
+                shipping_code,
+            </if>
+            <if test="user_id != null">
+                user_id,
+            </if>
+            <if test="buyer_message != null">
+                buyer_message,
+            </if>
+            <if test="buyer_nick != null">
+                buyer_nick,
+            </if>
+            <if test="buyer_rate != null">
+                buyer_rate,
+            </if>
+            <if test="commodity_id != null">
+                commodity_id,
+            </if>
+            <if test="commodity_type != null">
+                commodity_type,
+            </if>
+            <if test="create_user != null">
+                create_user,
+            </if>
+            <if test="update_user != null">
+                update_user,
+            </if>
+            <if test="shipping_type != null">
+                shipping_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="payment != null">
+                #{payment,jdbcType=DECIMAL},
+            </if>
+            <if test="payment_type != null">
+                #{payment_type,jdbcType=INTEGER},
+            </if>
+            <if test="post_fee != null">
+                #{post_fee,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="create_date != null">
+                #{create_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_date != null">
+                #{update_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payment_time != null">
+                #{payment_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="consigo_time != null">
+                #{consigo_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="end_time != null">
+                #{end_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="close_time != null">
+                #{close_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shipping_name != null">
+                #{shipping_name,jdbcType=VARCHAR},
+            </if>
+            <if test="shipping_code != null">
+                #{shipping_code,jdbcType=VARCHAR},
+            </if>
+            <if test="user_id != null">
+                #{user_id,jdbcType=CHAR},
+            </if>
+            <if test="buyer_message != null">
+                #{buyer_message,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_nick != null">
+                #{buyer_nick,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_rate != null">
+                #{buyer_rate,jdbcType=INTEGER},
+            </if>
+            <if test="commodity_id != null">
+                #{commodity_id,jdbcType=CHAR},
+            </if>
+            <if test="commodity_type != null">
+                #{commodity_type,jdbcType=VARCHAR},
+            </if>
+            <if test="create_user != null">
+                #{create_user,jdbcType=VARCHAR},
+            </if>
+            <if test="update_user != null">
+                #{update_user,jdbcType=VARCHAR},
+            </if>
+
+            <if test="shipping_type != null">
+                #{shipping_type,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertList">
+        insert into `order` (id, payment, payment_type,
+        post_fee, `status`, create_date,
+        update_date, payment_time, consigo_time,
+        end_time, close_time, shipping_name,
+        shipping_code, user_id, buyer_message,
+        buyer_nick, buyer_rate, commodity_id,
+        commodity_type, create_user, update_user, shipping_type
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=CHAR}, #{item.payment,jdbcType=DECIMAL}, #{item.payment_type,jdbcType=INTEGER},
+            #{item.post_fee,jdbcType=DECIMAL}, #{item.status,jdbcType=INTEGER}, #{item.create_date,jdbcType=TIMESTAMP},
+            #{item.update_date,jdbcType=TIMESTAMP}, #{item.payment_time,jdbcType=TIMESTAMP}, #{item.consigo_time,jdbcType=TIMESTAMP},
+            #{item.end_time,jdbcType=TIMESTAMP}, #{item.close_time,jdbcType=TIMESTAMP}, #{item.shipping_name,jdbcType=VARCHAR},
+            #{item.shipping_code,jdbcType=VARCHAR}, #{item.user_id,jdbcType=CHAR}, #{item.buyer_message,jdbcType=VARCHAR},
+            #{item.buyer_nick,jdbcType=VARCHAR}, #{item.buyer_rate,jdbcType=INTEGER}, #{item.commodity_id,jdbcType=CHAR},
+            #{item.commodity_type,jdbcType=VARCHAR}, #{item.create_user,jdbcType=VARCHAR}, #{item.update_user,jdbcType=VARCHAR}, #{item.shipping_type,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.Order">
+        update `order`
+        <set>
+            <if test="payment != null">
+                payment = #{payment,jdbcType=DECIMAL},
+            </if>
+            <if test="payment_type != null">
+                payment_type = #{payment_type,jdbcType=INTEGER},
+            </if>
+            <if test="post_fee != null">
+                post_fee = #{post_fee,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="create_date != null">
+                create_date = #{create_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_date != null">
+                update_date = #{update_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payment_time != null">
+                payment_time = #{payment_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="consigo_time != null">
+                consigo_time = #{consigo_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="end_time != null">
+                end_time = #{end_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="close_time != null">
+                close_time = #{close_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shipping_name != null">
+                shipping_name = #{shipping_name,jdbcType=VARCHAR},
+            </if>
+            <if test="shipping_code != null">
+                shipping_code = #{shipping_code,jdbcType=VARCHAR},
+            </if>
+            <if test="user_id != null">
+                user_id = #{user_id,jdbcType=CHAR},
+            </if>
+            <if test="buyer_message != null">
+                buyer_message = #{buyer_message,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_nick != null">
+                buyer_nick = #{buyer_nick,jdbcType=VARCHAR},
+            </if>
+            <if test="buyer_rate != null">
+                buyer_rate = #{buyer_rate,jdbcType=INTEGER},
+            </if>
+            <if test="commodity_id != null">
+                commodity_id = #{commodity_id,jdbcType=CHAR},
+            </if>
+            <if test="commodity_type != null">
+                commodity_type = #{commodity_type,jdbcType=VARCHAR},
+            </if>
+            <if test="create_user != null">
+                create_user = #{create_user,jdbcType=VARCHAR},
+            </if>
+            <if test="update_user != null">
+                update_user = #{update_user,jdbcType=VARCHAR},
+            </if>
+            <if test="shipping_type != null">
+                shipping_type = #{shipping_type,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.Order">
+    update `order`
+    set payment = #{payment,jdbcType=DECIMAL},
+      payment_type = #{payment_type,jdbcType=INTEGER},
+      post_fee = #{post_fee,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      create_date = #{create_date,jdbcType=TIMESTAMP},
+      update_date = #{update_date,jdbcType=TIMESTAMP},
+      payment_time = #{payment_time,jdbcType=TIMESTAMP},
+      consigo_time = #{consigo_time,jdbcType=TIMESTAMP},
+      end_time = #{end_time,jdbcType=TIMESTAMP},
+      close_time = #{close_time,jdbcType=TIMESTAMP},
+      shipping_name = #{shipping_name,jdbcType=VARCHAR},
+      shipping_code = #{shipping_code,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=CHAR},
+      buyer_message = #{buyer_message,jdbcType=VARCHAR},
+      buyer_nick = #{buyer_nick,jdbcType=VARCHAR},
+      buyer_rate = #{buyer_rate,jdbcType=INTEGER},
+      commodity_id = #{commodity_id,jdbcType=CHAR},
+      commodity_type = #{commodity_type,jdbcType=VARCHAR},
+      create_user = #{create_user,jdbcType=VARCHAR},
+      update_user = #{update_user,jdbcType=VARCHAR}
+      shipping_type = #{shipping_type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

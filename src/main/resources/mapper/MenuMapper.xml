@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.dto.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menu_name" />
+    <result column="menu_url" jdbcType="VARCHAR" property="menu_url" />
+    <result column="menu_icon" jdbcType="VARCHAR" property="menu_icon" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="is_directory" jdbcType="INTEGER" property="is_directory" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="top" jdbcType="INTEGER" property="top" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, menu_name, menu_url, menu_icon, tags, is_directory, sort, `top`
+  </sql>
+  <select id="getDirectory" resultMap="BaseResultMap">
+     select
+     <include refid="Base_Column_List"></include>
+    from menu where is_directory = 1
+  </select>
+
+  <select id="getNoDirectory" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from menu where top = #{id}
+  </select>
+
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from menu
+  </select>
+
+</mapper>

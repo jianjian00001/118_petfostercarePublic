@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.OrderShippingItemMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.dto.OrderShippingItem">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="order_id" jdbcType="CHAR" property="order_id" />
+    <result column="order_shipping_id" jdbcType="CHAR" property="order_shipping_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, order_shipping_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_shipping_item
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="getByOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_shipping_item
+    where order_id = #{order_id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_shipping_item
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cwjy.bs.orm.dto.OrderShippingItem">
+    insert into order_shipping_item (id, order_id, order_shipping_id
+      )
+    values (#{id,jdbcType=CHAR}, #{order_id,jdbcType=CHAR}, #{order_shipping_id,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.OrderShippingItem">
+    insert into order_shipping_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="order_id != null">
+        order_id,
+      </if>
+      <if test="order_shipping_id != null">
+        order_shipping_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="order_id != null">
+        #{order_id,jdbcType=CHAR},
+      </if>
+      <if test="order_shipping_id != null">
+        #{order_shipping_id,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.OrderShippingItem">
+    update order_shipping_item
+    <set>
+      <if test="order_id != null">
+        order_id = #{order_id,jdbcType=CHAR},
+      </if>
+      <if test="order_shipping_id != null">
+        order_shipping_id = #{order_shipping_id,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.OrderShippingItem">
+    update order_shipping_item
+    set order_id = #{order_id,jdbcType=CHAR},
+      order_shipping_id = #{order_shipping_id,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

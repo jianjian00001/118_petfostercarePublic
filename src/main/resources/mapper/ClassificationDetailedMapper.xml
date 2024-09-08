@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.ClassificationDetailedMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.entity.ClassificationDetailedEntity">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="update_date" />
+    <result column="create_user" jdbcType="VARCHAR" property="create_user" />
+    <result column="update_user" jdbcType="VARCHAR" property="update_user" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type_detailed" jdbcType="VARCHAR" property="type_detailed" />
+    <result column="commodity_category_id" jdbcType="CHAR" property="commodity_category_id" />
+    <result column="commodity_id" jdbcType="CHAR" property="commodity_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_date, update_date, create_user, update_user, `status`, type_detailed, 
+    commodity_category_id, commodity_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classification_detailed
+    where id = #{id,jdbcType=CHAR}
+  </select>
+    <select id="selectByCommodityCategoryIdAndCommodityId"
+            resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from classification_detailed
+      where commodity_category_id = #{commodity_category_id,jdbcType=CHAR}
+      and commodity_id = #{commodity_id,jdbcType=CHAR}
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from classification_detailed
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCommodityCategoryId">
+     delete from classification_detailed
+    where commodity_category_id = #{commodity_category_id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCommodityCategoryIdAndCommodityId">
+    delete from classification_detailed
+    where commodity_category_id = #{commodity_category_id,jdbcType=CHAR}
+    and commodity_id = #{commodity_id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cwjy.bs.orm.dto.ClassificationDetailed">
+    insert into classification_detailed (id, create_date, update_date, 
+      create_user, update_user, `status`, 
+      type_detailed, commodity_category_id, commodity_id
+      )
+    values (#{id,jdbcType=CHAR}, #{create_date,jdbcType=TIMESTAMP}, #{update_date,jdbcType=TIMESTAMP}, 
+      #{create_user,jdbcType=VARCHAR}, #{update_user,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{type_detailed,jdbcType=VARCHAR}, #{commodity_category_id,jdbcType=CHAR}, #{commodity_id,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.ClassificationDetailed">
+    insert into classification_detailed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="create_date != null">
+        create_date,
+      </if>
+      <if test="update_date != null">
+        update_date,
+      </if>
+      <if test="create_user != null">
+        create_user,
+      </if>
+      <if test="update_user != null">
+        update_user,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="type_detailed != null">
+        type_detailed,
+      </if>
+      <if test="commodity_category_id != null">
+        commodity_category_id,
+      </if>
+      <if test="commodity_id != null">
+        commodity_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="create_date != null">
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type_detailed != null">
+        #{type_detailed,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity_category_id != null">
+        #{commodity_category_id,jdbcType=CHAR},
+      </if>
+      <if test="commodity_id != null">
+        #{commodity_id,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.ClassificationDetailed">
+    update classification_detailed
+    <set>
+      <if test="create_date != null">
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        create_user = #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        update_user = #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type_detailed != null">
+        type_detailed = #{type_detailed,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity_category_id != null">
+        commodity_category_id = #{commodity_category_id,jdbcType=CHAR},
+      </if>
+      <if test="commodity_id != null">
+        commodity_id = #{commodity_id,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.ClassificationDetailed">
+    update classification_detailed
+    set create_date = #{create_date,jdbcType=TIMESTAMP},
+      update_date = #{update_date,jdbcType=TIMESTAMP},
+      create_user = #{create_user,jdbcType=VARCHAR},
+      update_user = #{update_user,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      type_detailed = #{type_detailed,jdbcType=VARCHAR},
+      commodity_category_id = #{commodity_category_id,jdbcType=CHAR},
+      commodity_id = #{commodity_id,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

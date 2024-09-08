@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cwjy.bs.orm.mapper.OrderReturnMapper">
+  <resultMap id="BaseResultMap" type="com.cwjy.bs.orm.entity.OrderReturnEntity">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="update_date" />
+    <result column="create_user" jdbcType="VARCHAR" property="create_user" />
+    <result column="update_user" jdbcType="VARCHAR" property="update_user" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="order_id" jdbcType="CHAR" property="order_id" />
+    <result column="refund_type" jdbcType="INTEGER" property="refund_type" />
+    <result column="shipment_number" jdbcType="VARCHAR" property="shipment_number" />
+    <result column="refund_instructions" jdbcType="VARCHAR" property="refund_instructions" />
+    <result column="commodity_id" jdbcType="CHAR" property="commodity_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_date, update_date, create_user, update_user, `status`, order_id, refund_type, 
+    shipment_number, refund_instructions, commodity_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_return
+    where id = #{id,jdbcType=CHAR}
+  </select>
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from order_return
+      where order_id = #{order_id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_return
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cwjy.bs.orm.dto.OrderReturn">
+    insert into order_return (id, create_date, update_date, 
+      create_user, update_user, `status`, 
+      order_id, refund_type, shipment_number, 
+      refund_instructions, commodity_id)
+    values (#{id,jdbcType=CHAR}, #{create_date,jdbcType=TIMESTAMP}, #{update_date,jdbcType=TIMESTAMP}, 
+      #{create_user,jdbcType=VARCHAR}, #{update_user,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{order_id,jdbcType=CHAR}, #{refund_type,jdbcType=INTEGER}, #{shipment_number,jdbcType=VARCHAR}, 
+      #{refund_instructions,jdbcType=VARCHAR}, #{commodity_id,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwjy.bs.orm.dto.OrderReturn">
+    insert into order_return
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="create_date != null">
+        create_date,
+      </if>
+      <if test="update_date != null">
+        update_date,
+      </if>
+      <if test="create_user != null">
+        create_user,
+      </if>
+      <if test="update_user != null">
+        update_user,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="order_id != null">
+        order_id,
+      </if>
+      <if test="refund_type != null">
+        refund_type,
+      </if>
+      <if test="shipment_number != null">
+        shipment_number,
+      </if>
+      <if test="refund_instructions != null">
+        refund_instructions,
+      </if>
+      <if test="commodity_id != null">
+        commodity_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="create_date != null">
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="order_id != null">
+        #{order_id,jdbcType=CHAR},
+      </if>
+      <if test="refund_type != null">
+        #{refund_type,jdbcType=INTEGER},
+      </if>
+      <if test="shipment_number != null">
+        #{shipment_number,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_instructions != null">
+        #{refund_instructions,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity_id != null">
+        #{commodity_id,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwjy.bs.orm.dto.OrderReturn">
+    update order_return
+    <set>
+      <if test="create_date != null">
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null">
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_user != null">
+        create_user = #{create_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_user != null">
+        update_user = #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="order_id != null">
+        order_id = #{order_id,jdbcType=CHAR},
+      </if>
+      <if test="refund_type != null">
+        refund_type = #{refund_type,jdbcType=INTEGER},
+      </if>
+      <if test="shipment_number != null">
+        shipment_number = #{shipment_number,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_instructions != null">
+        refund_instructions = #{refund_instructions,jdbcType=VARCHAR},
+      </if>
+      <if test="commodity_id != null">
+        commodity_id = #{commodity_id,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwjy.bs.orm.dto.OrderReturn">
+    update order_return
+    set create_date = #{create_date,jdbcType=TIMESTAMP},
+      update_date = #{update_date,jdbcType=TIMESTAMP},
+      create_user = #{create_user,jdbcType=VARCHAR},
+      update_user = #{update_user,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      order_id = #{order_id,jdbcType=CHAR},
+      refund_type = #{refund_type,jdbcType=INTEGER},
+      shipment_number = #{shipment_number,jdbcType=VARCHAR},
+      refund_instructions = #{refund_instructions,jdbcType=VARCHAR},
+      commodity_id = #{commodity_id,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

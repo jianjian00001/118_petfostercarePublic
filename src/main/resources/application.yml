@@ -1,0 +1,27 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /cwjy
+  max-http-header-size: 10000000
+  debug: true
+
+mybatis:
+  mapper-locations:
+  - classpath*:mapper/*Mapper.xml
+#  type-aliases-package: com.hr.**.mapper
+
+spring:
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/petjy?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
