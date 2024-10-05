@@ -13,7 +13,7 @@
 [https://www.bilibili.com/video/BV1gK411v7mg/](https://www.bilibili.com/video/BV1gK411v7mg/)**
 
 **毕业设计所有选题地址：
-[https://github.com/ynwynw/allProject](https://github.com/ynwynw/allProject)**
+[https://github.com/zhengjianzhong0107/allProject](https://github.com/zhengjianzhong0107/allProject)**
 
 ## 基于Java+Springboot的宠物寄养管理系统(源代码+数据库)118
 
